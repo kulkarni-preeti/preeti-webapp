@@ -33,8 +33,15 @@ export const createUser = async (request, response) => {
                 };
                 await User.create(newUser);
                 const createdUser = await User.findOne({ where: { username: newUser.username}});
-                delete createUser.password;
-                response.status(201).json(createdUser);
+                const getUser = {
+                    id : createdUser.dataValues.id,
+                    first_name : createdUser.dataValues.first_name,
+                    last_name : createdUser.dataValues.last_name,
+                    username : createdUser.dataValues.username,
+                    account_created : createdUser.dataValues.account_created,
+                    account_updated : createdUser.dataValues.account_updated
+                }
+                response.status(201).json(getUser);
             } else {
                 setErrorResponse('400', response, "User already exists. Use a different username");
             }
