@@ -21,5 +21,3 @@ jobs:
         node-version: '20'
     - name: Install dependencies
       run: npm install 
-    - name: Compile code
-      run: npm start 
