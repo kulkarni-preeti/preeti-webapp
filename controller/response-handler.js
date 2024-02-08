@@ -33,6 +33,12 @@ export const setErrorResponse = (errorCode, response, errorMessage) => {
         });
         break;
       }
+      case '401': {
+        response.status(401).json({
+          message: errorMessage ? errorMessage : "Authorization failed, check credentials"
+        });
+        break;
+      }
       case '405': {
         response.status(405).json({
           message: errorMessage ? errorMessage : "Invalid request, only GET method is allowed."
