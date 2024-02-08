@@ -65,7 +65,7 @@ export const fetchUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
           
             if (!authenticatedUser) {
-                setErrorResponse('400', response, "User does not exist.");
+                setErrorResponse('401', response, "User does not exist.");
             } else {
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
                 if (isValid) {
@@ -102,7 +102,7 @@ export const updateUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
         
             if (!authenticatedUser) {
-                setErrorResponse('400', response, "User does not exist.");
+                setErrorResponse('401', response, "User does not exist.");
             } else {
                 // Validating password match
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
