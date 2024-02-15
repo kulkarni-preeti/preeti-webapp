@@ -1,11 +1,13 @@
 
 import { setResponse, setErrorResponse } from "../controller/response-handler.js";
 import { Sequelize } from "sequelize";
+import dotenv from 'dotenv';
 
-//TODO: Check if we really need to set 200 success response here.
+dotenv.config();
+
 export const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: 'localhost',
-    dialect: 'postgres',
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
     logging: false
 });
 
