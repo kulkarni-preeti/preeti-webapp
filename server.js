@@ -6,11 +6,11 @@ import { User } from './model/user-model.js';
 const PORT = 3000;
 const app = express();
 
-// app.use(cors()); // If request isn't coming from same domain, server will reject the requests
-// app.use(bodyParser.text());
-app.use(express.json()); // Converts JSON is req body to javascript object
-app.use(express.urlencoded({ extended: true })); // If encoded URL is received, it will decode
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
-registerRoute(app, User); //Initialize routes
+registerRoute(app, User);
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
+
+export {app}

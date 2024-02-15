@@ -7,9 +7,6 @@ import { User } from '../model/user-model.js';
 import * as userService from "../services/user-service.js";
 const ignorePostFields = ['account_created', 'account_updated'];
 
-const validPostFields = ['first_name', 'last_name', 'password', 'username', 'account_created', 'account_updated'];
-const validPutFields = ['first_name', 'last_name', 'password'];
-
 export const createUser = async (request, response) => {
     try {
         await sequelize.authenticate();
