@@ -22,6 +22,11 @@ jobs:
       - name: Enable PostgreSQL Server
         run: sudo systemctl enable postgresql
 
+      - name: Debug
+        run: |
+          pwd
+          ls -la
+
       - name: Create Database and User
         run: |
           sudo -u postgres psql -c "CREATE USER ${{ secrets.DB_USER }} WITH PASSWORD ${{ secrets.DB_PASSWORD }};"
