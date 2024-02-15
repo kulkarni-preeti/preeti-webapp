@@ -1,4 +1,5 @@
 # Assignment 2
+demo
 
 Implemented Branch Protection rules.
 Added POST, GET and PUT end points for v1/user/self endpoint.
@@ -18,3 +19,4 @@ npm install
 
 # Run the application
 npm start
+
