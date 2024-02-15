@@ -1,5 +1,5 @@
 # Assignment 2
-demo
+demo test
 
 Implemented Branch Protection rules.
 Added POST, GET and PUT end points for v1/user/self endpoint.
