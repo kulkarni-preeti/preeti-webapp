@@ -19,14 +19,8 @@ jobs:
       - name: Start PostgreSQL Server
         run: sudo systemctl start postgresql
 
-      - name: Wait for PostgreSQL to start
-        run: |
-          for i in {1..5}; do
-            sudo systemctl is-active --quiet postgresql && break
-            sleep 10
-          done
-          sudo systemctl is-active --quiet postgresql || (echo "PostgreSQL service failed to start within the timeout period." && exit 1)
-          echo "PostgreSQL service started successfully."
+      - name: Enable PostgreSQL Server
+        run: sudo systemctl enable postgresql
 
       - name: Create Database and User
         run: |
