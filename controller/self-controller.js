@@ -76,7 +76,7 @@ export const fetchUser = async (request, response) => {
                     }
                     response.status(200).json(getUser).send();
                 } else {
-                    setErrorResponse('400', response, "Invalid Credentials");
+                    setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
         }
@@ -121,7 +121,7 @@ export const updateUser = async (request, response) => {
                         setResponse('204', response);
                     }
                 } else {
-                    setErrorResponse('400', response, "Invalid Credentials");
+                    setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
         }
