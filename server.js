@@ -4,12 +4,13 @@ import registerRoute from "./routes/index.js";
 import User from './model/user-model.js';
 import { sequelize } from "./authenticate/auth.js";
 
-
-async function dbInit () {
+try {
     await sequelize.sync({ force: false , alter : true}).then(() => {
         console.log('Model synchronized with database');
     })
-};
+} catch (error) {
+    console.error(error, "error");
+}
 
 const PORT = 3000;
 const app = express();
@@ -17,8 +18,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-dbInit();
+
 registerRoute(app, User);
+
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 
 export default app;
