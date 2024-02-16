@@ -33,8 +33,4 @@ User.init({
   updatedAt: "account_updated"
 });
 
-sequelize.sync({ force: false }).then(() => {
-    console.log('Model synchronized with database');
-});
-
 export { User };
