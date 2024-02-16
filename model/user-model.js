@@ -1,9 +1,8 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
-import {sequelize, authPostgres} from '../authenticate/auth.js';
+import {DataTypes} from 'sequelize';
+import {sequelize} from '../authenticate/auth.js';
 
-class User extends Model {}
+const User = sequelize.define('User', {
 
-User.init({
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -25,12 +24,12 @@ User.init({
         type: DataTypes.STRING,
         required: true
     }
-}, {
-  sequelize, // We need to pass the connection instance
+},{
+  //sequelize, // We need to pass the connection instance
 //   modelName: 'User',
   underscored: true,
   createdAt: "account_created",
   updatedAt: "account_updated"
 });
 
-export { User };
+export default User;
