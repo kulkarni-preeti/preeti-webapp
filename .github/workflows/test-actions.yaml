@@ -29,9 +29,8 @@ jobs:
 
       - name: Create Database and User
         run: |
-          sudo -u postgres psql -c "ALTER USER ${{ secrets.DB_USER }} PASSWORD '${{ secrets.DB_PASSWORD }}';"
-          sudo -u postgres psql -c "CREATE DATABASE ${{ secrets.DB_NAME }};"
-          sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${{ secrets.DB_NAME }} TO ${{ secrets.DB_USER }};"
+          sudo -u postgres psql -c "CREATE USER ${{ secrets.DB_USER }} WITH PASSWORD '${{ secrets.DB_PASSWORD }}' SUPERUSER;"
+          sudo -u postgres psql -c "CREATE DATABASE ${{ secrets.DB_NAME }} OWNER ${{ secrets.DB_USER }};"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
