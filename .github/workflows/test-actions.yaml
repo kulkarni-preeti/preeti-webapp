@@ -29,10 +29,9 @@ jobs:
 
       - name: Create Database and User
         run: |
-          su postgres
-          psql
-          CREATE USER ${{ secrets.DB_USER }} WITH PASSWORD '${{ secrets.DB_PASSWORD }}' SUPERUSER;
-          CREATE DATABASE ${{ secrets.DB_NAME }} OWNER ${{ secrets.DB_USER }};
+          sudo -u postgres psql --no-psqlrc -c "CREATE USER ${{ secrets.DB_USER }} WITH PASSWORD '${{ secrets.DB_PASSWORD }}' SUPERUSER;"
+          sudo -u postgres psql --no-psqlrc -c "CREATE DATABASE ${{ secrets.DB_NAME }} OWNER ${{ secrets.DB_USER }};"
+
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
