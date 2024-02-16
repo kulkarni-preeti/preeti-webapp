@@ -22,4 +22,4 @@ registerRoute(app, User);
 dbInit();
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 
-export {app}
+export default app;
