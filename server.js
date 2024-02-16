@@ -17,9 +17,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-registerRoute(app, User);
 dbInit();
+registerRoute(app, User);
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 
 export default app;
