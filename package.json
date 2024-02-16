@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha tests/create-account.test.js"
+    "test": "mocha tests/create-account.test.js --exit"
   },
   "author": "",
   "license": "ISC",
