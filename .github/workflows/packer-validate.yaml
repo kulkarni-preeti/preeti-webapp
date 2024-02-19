@@ -1,0 +1,26 @@
+name: HCL Packer Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Packer
+      run: |
+        brew tap hashicorp/tap
+        brew install hashicorp/tap/packer
+        packer --version
+
+    - name: Format Packer template
+      run: packer fmt -check .
+
+    - name: Validate Packer template
+      run: packer validate .
