@@ -45,11 +45,6 @@ source "googlecompute" "custom-image" {
   image_project_id = var.project_id
   image_storage_locations = ["us"]
   ssh_username = "packer"
-
-  network {
-    use_internal_ip = true
-  }
-
 }
 
 build {
