@@ -18,6 +18,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y packer
 
+    - name: Initialize Packer (install required plugins)
+      run: packer init packer/gcp-ami.pkr.hcl
+
     - name: Format Packer template
       run: packer fmt -var-file=packer/variables.json packer/gcp-ami.pkr.hcl
 
