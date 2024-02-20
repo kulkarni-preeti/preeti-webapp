@@ -22,7 +22,8 @@ jobs:
       run: packer init packer/gcp-ami.pkr.hcl
 
     - name: Format Packer template
-      run: packer fmt -var-file=packer/variables.json packer/gcp-ami.pkr.hcl
+      run: set -e
+          packer fmt -var-file=packer/variables.json packer/gcp-ami.pkr.hcl || { echo "Packer fmt modified the template, failing workflow"; exit 1; }
 
     - name: Validate Packer template
       run: packer validate -var-file=packer/variables.json packer/gcp-ami.pkr.hcl
