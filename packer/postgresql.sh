@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo dnf install -y postgresql-server
 sudo postgresql-setup initdb
 sudo systemctl enable postgresql
