@@ -1,5 +1,5 @@
-sudo dnf -y module reset nodejs
-sudo dnf -y module enable nodejs:20
-sudo dnf -y install nodejs
+curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+sudo dnf install nodejs -y
 
-sudo dnf -y install unzip
+sudo dnf install httpd -y
+sudo dnf install -y unzip 
