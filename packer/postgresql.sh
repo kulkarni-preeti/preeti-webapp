@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo yum update -y
 sudo dnf install -y postgresql-server
 sudo postgresql-setup initdb
 sudo systemctl enable postgresql
