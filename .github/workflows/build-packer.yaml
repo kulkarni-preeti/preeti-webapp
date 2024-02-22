@@ -52,10 +52,10 @@ jobs:
             sudo apt-get update && sudo apt-get install packer
 
     - name: Initiate Packer template
-      run: packer init .
+      run: packer init -var-file=./packer/variables.json ./packer
 
     - name: Validate Packer template
-      run: packer validate -var-file=packer/variables.json .
+      run: packer validate -var-file=./packer/variables.json ./packer
 
     - name: Build Packer template
-      run: packer build -var-file=packer/variables.json .
+      run: packer build -var-file=./packer/variables.json ./packer
