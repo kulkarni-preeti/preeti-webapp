@@ -18,6 +18,11 @@ variable "source_image_family" {
   description = "The family name of the source image (e.g., centos-8)"
 }
 
+variable "image_family" {
+  type = string
+  description = "The family name of the image"
+}
+
 variable "zone" {
   type = string
   description = "The GCP zone where the image will be created (e.g., us-central1-a)"
@@ -41,7 +46,7 @@ source "googlecompute" "custom-image" {
   disk_type = var.disk_type
   image_name = "custom-image-{{timestamp}}"
   image_description = "Custom Image using CentOS as source image"
-  image_family = "app-custom-image"
+  image_family = var.image_family
   image_project_id = var.project_id
   image_storage_locations = ["us"]
   ssh_username = "packer"
@@ -50,9 +55,38 @@ source "googlecompute" "custom-image" {
 build {
   sources = ["source.googlecompute.custom-image"]
 
+  provisioner "file" {
+    source      = "./webapp.zip"
+    destination = "/tmp/webapp.zip"
+  }
+
+  provisioner "file" {
+    source      = "./webapp.service"
+    destination = "/tmp/csye6225.service"
+  }
+
+  provisioner "file" {
+    source      = "./.env"
+    destination = "/tmp/.env"
+  }
+
   provisioner "shell" {
-    inline = [
-      "echo 'Custom provisioning steps can be added here'",
-    ]
+    script = "./packer/postgresql.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/user-creation.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/node.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/copy-webapp.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/user-start.sh"
   }
 }
