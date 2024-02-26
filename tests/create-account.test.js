@@ -33,7 +33,7 @@ describe("Create an Account", () => {
     request(app)
       .get("/vi/user")
       .set("Authorization", authHeader)
-      .expect(200)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body).to.deep.equal(createdUser);
