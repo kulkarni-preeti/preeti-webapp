@@ -38,7 +38,7 @@ variable "disk_type" {
   description = "The type of disk for the custom image (e.g., pd-standard, pd-ssd)"
 }
 
-source "googlecompute" "custom-image" {
+"custom-image" {
   project_id = var.project_id
   source_image_family = var.source_image_family
   zone = var.zone
