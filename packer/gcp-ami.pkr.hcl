@@ -65,15 +65,6 @@ build {
     destination = "/tmp/csye6225.service"
   }
 
-  provisioner "file" {
-    source      = "./.env"
-    destination = "/tmp/.env"
-  }
-
-  provisioner "shell" {
-    script = "./packer/postgresql.sh"
-  }
-
   provisioner "shell" {
     script = "./packer/user-creation.sh"
   }

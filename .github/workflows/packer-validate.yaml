@@ -18,22 +18,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y packer
     
-    - name: Zip all the webApp files
+    - name: Zip all the webapp files
       run: |
           zip -r webapp.zip ./
           pwd
-
-    - name: Setup Environment File
-      run: |
-          cat << EOF > .env
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_DIALECT: ${{ secrets.DB_DIALECT }} 
-          EOF
-      shell: bash
 
     - name: Initialize Packer (install required plugins)
       run: packer init ./packer/gcp-ami.pkr.hcl
