@@ -12,6 +12,9 @@ jobs:
       POSTGRES_USER: ${{ secrets.DB_USER }}
       POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
       POSTGRES_DB: ${{ secrets.DB_NAME }}
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,9 +27,9 @@ jobs:
       - name: Install Postgres
         run: |
           sudo apt-get update
-          sudo apt-get install -y postgresql-server postgres-contrib
-          sudo systemctl enable postgresql
+          sudo apt-get install -y postgresql postgres-contrib
           sudo systemctl start postgresql
+          sudo systemctl enable postgresql
 
       - name: Create Postgres Database and User 
         run: |
