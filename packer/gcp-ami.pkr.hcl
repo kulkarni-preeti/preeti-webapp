@@ -80,4 +80,13 @@ build {
   provisioner "shell" {
     script = "./packer/user-start.sh"
   }
+
+  provisioner "shell" {
+    script = "./packer/cloud-ops.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/app-logs.sh"
+  }
+
 }
