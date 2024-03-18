@@ -3,13 +3,12 @@ import { createLogger, transports, format } from 'winston';
 let loggerInstance = null;
 let environmentType = '';
 
-function initializeLogger(envType) {
+function initializeLogger() {
   let logFileLoc;
-  
   if (process.env.NODE_ENV === 'test') {
-    logFileLoc = './test-logging';
+    logFileLoc = [new winston.transports.Console()]
   } else {
-    logFileLoc = './test-logging';
+    logFileLoc = '/var/logs/webapp.log';
   }
 
   return createLogger({
