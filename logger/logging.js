@@ -8,7 +8,7 @@ function initializeLogger() {
   if (process.env.NODE_ENV === 'test') {
     logTransport = new transports.Console();
   } else {
-    logTransport = new transports.File({ filename: '/var/logs/webapp.log' }); // File transport for production
+    logTransport = new transports.File({ filename: '/var/log/webapp/webapp.log' });
   }
 
   return createLogger({
