@@ -1,9 +1,9 @@
 import { createLogger, transports, format } from 'winston';
-import * as test from '../tests/create-account.test.js';
+import * as test from '../tests/create-account.test';
 
 let envType = test.environmentType;
 let logFileLoc;
-if (envType === "testing") {
+if (envType === 'test') {
   logFileLoc = './test-logging'
 } else {
   logFileLoc = '/var/logs/webapp.log'
