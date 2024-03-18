@@ -7,8 +7,9 @@ import User from '../model/user-model.js';
 import * as userService from "../services/user-service.js";
 const ignorePostFields = ['account_created', 'account_updated'];
 import { getLogger } from './../logger/logging.js';
+import * as createAccountTest from '../tests/create-account.test.js';
 
-const logger = getLogger();
+const logger = getLogger(createAccountTest.environmentType);
 
 export const createUser = async (request, response) => {
     try {

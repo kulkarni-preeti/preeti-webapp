@@ -3,8 +3,7 @@ import * as test from '../tests/create-account.test.js';
 
 let loggerInstance = null;
 
-function initializeLogger() {
-  const envType = test.environmentType;
+function initializeLogger(envType) {
   let logFileLoc;
 
   if (envType === 'test') {
@@ -22,9 +21,9 @@ function initializeLogger() {
   });
 }
 
-export function getLogger() {
+export function getLogger(envType) {
   if (!loggerInstance) {
-    loggerInstance = initializeLogger();
+    loggerInstance = initializeLogger(envType);
   }
   return loggerInstance;
 }
