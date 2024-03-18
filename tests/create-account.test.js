@@ -2,6 +2,7 @@ import * as chai from 'chai';
 import request from 'supertest';
 import app from '../server.js';
 
+export const environmentType = 'test';
 const { expect } = chai;
 let createdUser;
 let userData;
