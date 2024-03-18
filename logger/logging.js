@@ -4,6 +4,7 @@ let loggerInstance = null;
 let environmentType = '';
 
 function initializeLogger() {
+  let logTransport;
   if (process.env.NODE_ENV === 'test') {
     logTransport = new transports.Console();
   } else {
