@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd /var || exit
-mkdir -p logs
+sudo mkdir -p logs
 cd logs || exit
 touch webapp.log
