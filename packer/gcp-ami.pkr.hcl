@@ -65,11 +65,6 @@ build {
     destination = "/tmp/csye6225.service"
   }
 
-  provisioner "file" {
-    source      = "./tmp/webapp.log"
-    destination = "/tmp/webapp.log"
-  }
-
   provisioner "shell" {
     script = "./packer/user-creation.sh"
   }
@@ -84,6 +79,10 @@ build {
 
   provisioner "shell" {
     script = "./packer/user-start.sh"
+  }
+
+  provisioner "shell" {
+    script = "./packer/create-log.sh"
   }
 
   provisioner "shell" {
