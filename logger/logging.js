@@ -1,5 +1,4 @@
 import { createLogger, transports, format } from 'winston';
-import * as test from '../tests/create-account.test.js';
 
 let loggerInstance = null;
 
@@ -21,9 +20,13 @@ function initializeLogger(envType) {
   });
 }
 
-export function getLogger(envType) {
+export function setEnvironmentType(type) {
+  environmentType = type;
+}
+
+export function getLogger() {
   if (!loggerInstance) {
-    loggerInstance = initializeLogger(envType);
+    loggerInstance = initializeLogger();
   }
   return loggerInstance;
 }
