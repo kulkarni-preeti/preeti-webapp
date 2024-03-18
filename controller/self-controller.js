@@ -9,7 +9,7 @@ const ignorePostFields = ['account_created', 'account_updated'];
 import { getLogger } from './../logger/logging.js';
 import * as createAccountTest from '../tests/create-account.test.js';
 
-setEnvironmentType(createAccountTest.environmentType);
+getLogger.setEnvironmentType(createAccountTest.environmentType);
 const logger = getLogger();
 
 export const createUser = async (request, response) => {
