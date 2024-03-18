@@ -9,7 +9,7 @@ function initializeLogger(envType) {
   if (envType === 'test') {
     logFileLoc = './test-logging';
   } else {
-    logFileLoc = '/var/logs/webapp.log';
+    logFileLoc = './test-logging';
   }
 
   return createLogger({
