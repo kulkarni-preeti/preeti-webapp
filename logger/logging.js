@@ -4,19 +4,16 @@ let loggerInstance = null;
 let environmentType = '';
 
 function initializeLogger() {
-  let logFileLoc;
   if (process.env.NODE_ENV === 'test') {
-    logFileLoc = [new transports.Console()]
+    logTransport = new transports.Console();
   } else {
-    logFileLoc = '/var/logs/webapp.log';
+    logTransport = new transports.File({ filename: '/var/logs/webapp.log' }); // File transport for production
   }
 
   return createLogger({
     level: 'info',
     format: format.json(),
-    transports: [
-      new transports.File({ filename: logFileLoc })
-    ]
+    transports: [logTransport]
   });
 }
 
