@@ -1,8 +1,12 @@
 #!/bin/bash
 
-sudo chmod -R 777 /var
+sudo chmod -R 755 /var
 cd /var || exit
 sudo -l
-sudo mkdir -p logs
-cd logs || exit
-touch webapp.log
+sudo mkdir -p /var/logs
+sudo chmod -R 755 /var/logs
+
+cd /var/logs || exit
+
+sudo touch webapp.log
+sudo chmod 644 webapp.log
