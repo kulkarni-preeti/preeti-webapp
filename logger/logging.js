@@ -22,12 +22,12 @@ function initializeLogger(envType) {
 }
 
 export function setEnvironmentType(type) {
-  environmentType = type;
+  environmentType = type
 }
 
 export function getLogger() {
   if (!loggerInstance) {
-    loggerInstance = initializeLogger();
+    loggerInstance = initializeLogger(environmentType);
   }
   return loggerInstance;
 }

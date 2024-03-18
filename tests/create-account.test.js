@@ -1,8 +1,10 @@
 import * as chai from 'chai';
 import request from 'supertest';
 import app from '../server.js';
+import { setEnvironmentType } from '../logger/logging.js'; // Adjust the path if needed
 
 export const environmentType = 'test';
+setEnvironmentType(environmentType);
 const { expect } = chai;
 let createdUser;
 let userData;
