@@ -1,6 +1,7 @@
 import { createLogger, transports, format } from 'winston';
-import * as envType from '../tests/create-account.test.js';
+import * as test from '../tests/create-account.test.js';
 
+let envType = test.environmentType;
 if (envType === "testing") {
   logFileLoc = './test-logging'
 } else {
