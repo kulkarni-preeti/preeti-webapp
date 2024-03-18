@@ -6,7 +6,7 @@ let environmentType = '';
 function initializeLogger() {
   let logFileLoc;
   if (process.env.NODE_ENV === 'test') {
-    logFileLoc = [new winston.transports.Console()]
+    logFileLoc = [new transports.Console()]
   } else {
     logFileLoc = '/var/logs/webapp.log';
   }
