@@ -1,5 +1,5 @@
 import { createLogger, transports, format } from 'winston';
-import * as test from '../tests/create-account.test';
+import * as test from '../tests/create-account.test.js';
 
 let loggerInstance = null;
 
