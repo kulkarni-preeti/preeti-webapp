@@ -6,6 +6,7 @@ import { sequelize } from '../authenticate/auth.js';
 import User from '../model/user-model.js';
 import * as userService from "../services/user-service.js";
 const ignorePostFields = ['account_created', 'account_updated'];
+import logger from './../logger/logging.js'
 
 export const createUser = async (request, response) => {
     try {
@@ -39,6 +40,7 @@ export const createUser = async (request, response) => {
                     account_updated : createdUser.dataValues.account_updated
                 }
                 response.status(201).json(getUser);
+                logger.info('User logged in', { username: 'john_doe', status: 'success' });
             } else {
                 setErrorResponse('400', response, "User already exists. Use a different username");
             }
