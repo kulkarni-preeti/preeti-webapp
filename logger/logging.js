@@ -1,6 +1,7 @@
 import { createLogger, transports, format } from 'winston';
 
 let loggerInstance = null;
+let environmentType = '';
 
 function initializeLogger(envType) {
   let logFileLoc;
