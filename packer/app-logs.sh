@@ -1,10 +1,12 @@
+#!/bin/bash
+
 sudo bash -c "cat << EOF > /etc/google-cloud-ops-agent/config.yaml
 logging:
   receivers:
     webapp-receiver:
       type: files
       include_paths:
-        - /var/webapp.log
+        - /var/logs/webapp.log
       record_log_file_path: true
   processors:
     webapp-processor:
