@@ -43,6 +43,7 @@ jobs:
       - name: Run Integration Tests
         run: npm test
         env:
+          NODE_ENV: test
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_USER: ${{ secrets.DB_USER }}

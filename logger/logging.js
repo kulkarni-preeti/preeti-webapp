@@ -5,8 +5,8 @@ let environmentType = '';
 
 function initializeLogger(envType) {
   let logFileLoc;
-
-  if (envType === 'test') {
+  
+  if (process.env.NODE_ENV === 'test') {
     logFileLoc = './test-logging';
   } else {
     logFileLoc = './test-logging';
