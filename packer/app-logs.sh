@@ -1,4 +1,4 @@
-cat << EOF | sudo vi /etc/google-cloud-ops-agent/config.yaml
+sudo bash -c "cat << EOF > /etc/google-cloud-ops-agent/config.yaml
 logging:
   receivers:
     webapp-receiver:
@@ -10,12 +10,12 @@ logging:
     webapp-processor:
       type: parse_json
       time_key: time
-      time_format: "%Y-%m-%dT%H:%M:%S.%L%Z"
+      time_format: \"%Y-%m-%dT%H:%M:%S.%L%Z\"
   service:
     pipelines:
       default_pipeline:
         receivers: [webapp-receiver]
         processors: [webapp-processor]
-EOF
+EOF"
 
 sudo systemctl restart google-cloud-ops-agent
