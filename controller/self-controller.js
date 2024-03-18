@@ -6,7 +6,9 @@ import { sequelize } from '../authenticate/auth.js';
 import User from '../model/user-model.js';
 import * as userService from "../services/user-service.js";
 const ignorePostFields = ['account_created', 'account_updated'];
-import logger from './../logger/logging.js'
+import { getLogger } from './../logger/logging.js';
+
+const logger = getLogger();
 
 export const createUser = async (request, response) => {
     try {
