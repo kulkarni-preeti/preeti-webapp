@@ -25,7 +25,7 @@ export const createUser = async (request, response) => {
         } else {
             const existingUser = await User.findOne({ where: { username: userDetails.username}});
             if (existingUser == null) {
-                logger.info('User exists', { User: userDetails.username});
+                logger.info('User is unique. Creating user', { User: userDetails.username});
                 const newUser = {
                     id : uuidv4(),  // https://www.geeksforgeeks.org/how-to-create-a-guid-uuid-in-javascript/
                     first_name : userDetails.first_name,
@@ -44,9 +44,9 @@ export const createUser = async (request, response) => {
                     account_updated : createdUser.dataValues.account_updated
                 }
                 response.status(201).json(getUser);
-                logger.info('User created', { username: getUser.username, status: 'success' });
+                logger.info('User created successfully', { username: getUser.username, status: 'success' });
             } else {
-                logger.warn('User exists', { username: userDetails.username, status: 'success' });
+                logger.warn('User exists and is not unique', { username: userDetails.username, status: 'success' });
                 setErrorResponse('400', response, "User already exists. Use a different username");
             }
         }
@@ -71,7 +71,7 @@ export const fetchUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
           
             if (!authenticatedUser) {
-                logger.warn('User does not exist', {username: authEmail, status: "success"})
+                logger.warn('User does not exist. Failed at authentication', {username: authEmail, status: "success"})
                 setErrorResponse('401', response, "User does not exist.");
             } else {
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
@@ -88,7 +88,7 @@ export const fetchUser = async (request, response) => {
                     response.status(200).json(getUser).send();
                     logger.info('User Details retrieved', {username: authEmail, status: "success"})
                 } else {
-                    logger.error('Invalid Login Credentials', {status: "error"})
+                    logger.error('Invalid Login Credentials. Check username or password.', {status: "error"})
                     setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
@@ -114,7 +114,7 @@ export const updateUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
         
             if (!authenticatedUser) {
-                logger.warn('User does not exist', {username: authEmail, status: "success"})
+                logger.warn('User does not exist. Failed at authentication', {username: authEmail, status: "success"})
                 setErrorResponse('401', response, "User does not exist.");
             } else {
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
@@ -138,7 +138,7 @@ export const updateUser = async (request, response) => {
                         logger.info('User Details edited', {username: authEmail, status: "success"})
                     }
                 } else {
-                    logger.error('Invalid Login Credentials', {status: "error"})
+                    logger.error('Invalid Login Credentials. Check username or password.', {status: "error"})
                     setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
