@@ -10,8 +10,15 @@ logging:
       type: parse_json
       time_key: time
       time_format: "YYYY-MM-DDTHH:MM:SS.sssZ"
+    move_severity:
+      type: modify_fields
+      fields:
+        severity:
+          move_from: jsonPayload.severity
   service:
     pipelines:
       default_pipeline:
         receivers: [webapp-receiver]
-        processors: [webapp-processor]
+        processors:
+          - webapp-processor
+          - move_severity
