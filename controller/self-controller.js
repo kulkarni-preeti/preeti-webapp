@@ -104,11 +104,9 @@ export const updateUser = async (request, response) => {
             if (!authenticatedUser) {
                 setErrorResponse('401', response, "User does not exist.");
             } else {
-                // Validating password match
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
                 if (isValid) {
                     const resBody = request.body;
-                    // resBody.every(key => validPutFields.includes(key));
                     if (!userService.isValidReq(resBody) || !(userService.isValidPutReq(resBody))) {
                         setErrorResponse('400', response);
                     } else {

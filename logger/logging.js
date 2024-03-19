@@ -18,10 +18,6 @@ function initializeLogger() {
   });
 }
 
-export function setEnvironmentType(type) {
-  environmentType = type
-}
-
 export function getLogger() {
   if (!loggerInstance) {
     loggerInstance = initializeLogger(environmentType);
