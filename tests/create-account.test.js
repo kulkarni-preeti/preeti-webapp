@@ -1,10 +1,6 @@
 import * as chai from 'chai';
 import request from 'supertest';
 import app from '../server.js';
-import { setEnvironmentType } from '../logger/logging.js'; // Adjust the path if needed
-
-export const environmentType = 'test';
-setEnvironmentType(environmentType);
 const { expect } = chai;
 let createdUser;
 let userData;
@@ -24,7 +20,7 @@ describe("Create an Account", () => {
       .end((err, res) => {
         if (err) return done(err);
         createdUser = res.body;
-        expect(res.body.username).to.equal(userData.username);
+        expect(createdUser.username).to.equal(userData.username);
         done();
       });
   });

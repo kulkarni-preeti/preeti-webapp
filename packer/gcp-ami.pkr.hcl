@@ -87,10 +87,6 @@ build {
   }
 
   provisioner "shell" {
-    script = "./packer/create-log.sh"
-  }
-
-  provisioner "shell" {
     script = "./packer/cloud-ops.sh"
   }
 
