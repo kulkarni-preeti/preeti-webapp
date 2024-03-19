@@ -25,8 +25,6 @@ const User = sequelize.define('User', {
         required: true
     }
 },{
-  //sequelize, // We need to pass the connection instance
-//   modelName: 'User',
   underscored: true,
   createdAt: "account_created",
   updatedAt: "account_updated"
