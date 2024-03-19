@@ -8,7 +8,7 @@ const logger = getLogger();
 
 const isGetMethod = (request, response, next) => {
     if ((request.method !== 'GET') || (Object.keys(request.query).length > 0)) {
-        logger.error('Invalid request. Check Payload', {status: "error"})
+        logger.error('Invalid request. Check Payload', {severity: "error", status: "error"})
         setErrorResponse('405', response);
         return;
     }
