@@ -13,7 +13,10 @@ function initializeLogger() {
 
   return createLogger({
     level: 'info',
-    format: format.json(),
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.json()
+    ),
     transports: [logTransport]
   });
 }
