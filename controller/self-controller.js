@@ -11,20 +11,22 @@ const logger = getLogger();
 
 export const createUser = async (request, response) => {
     try {
+        logger.debug('createUser is being processed', {severity: "debug"})
+
         await sequelize.authenticate();
         response.header('Cache-Control', 'no-cache');  // https://www.rfc-editor.org/rfc/rfc9111#section-5.2
         
         const userDetails = request.body;
         ignorePostFields.forEach(field => delete userDetails[field]);
         if (!userService.isValidReq(userDetails) || (Object.keys(request.query).length > 0) || !(userService.isValidPostBody(userDetails))) {
-            logger.error('Provided request is invalid', {severity: "error", userDetails : userDetails, status: "error"})
+            logger.error('Provided request is invalid', {severity: "error"})
             setErrorResponse('400', response);
-            logger.error('Provided email is invalid', {severity: "error", email : userDetails.username, status: "error"})
+            logger.error('Provided email is invalid', {severity: "error"})
             setErrorResponse('400', response, "Invalid username, not an email.");
         } else {
             const existingUser = await User.findOne({ where: { username: userDetails.username}});
             if (existingUser == null) {
-                logger.info('User is unique. Creating user', {severity: "info", User: userDetails.username});
+                logger.info('User is unique. Creating user', {severity: "info"});
                 const newUser = {
                     id : uuidv4(),  // https://www.geeksforgeeks.org/how-to-create-a-guid-uuid-in-javascript/
                     first_name : userDetails.first_name,
@@ -43,25 +45,26 @@ export const createUser = async (request, response) => {
                     account_updated : createdUser.dataValues.account_updated
                 }
                 response.status(201).json(getUser);
-                logger.info('User created successfully', {severity: "info", username: getUser.username, status: 'success' });
+                logger.info('User created successfully', {severity: "info"});
             } else {
-                logger.warn('User exists and is not unique', {severity: "warn", username: userDetails.username, status: 'success' });
+                logger.warn('User exists and is not unique', {severity: "warn"});
                 setErrorResponse('400', response, "User already exists. Use a different username");
             }
         }
     } catch (error) {
-        logger.error('Service Unavailable', {severity: "error", status: "error"})
+        logger.error('Service Unavailable', {severity: "error"})
         setErrorResponse('503', response);
     }
 };
 
 export const fetchUser = async (request, response) => {
     try {
+        logger.debug('fetchUser is being processed', {severity: "debug"})
         await sequelize.authenticate();
         response.header('Cache-Control', 'no-cache');  // https://www.rfc-editor.org/rfc/rfc9111#section-5.2
         const authorization = request.headers.authorization;
         if (!authorization || (Object.keys(request.query).length > 0) || (Object.keys(request.body).length > 0)) {
-            logger.error('Provided Request is invalid', {severity: "error", status: "error"})
+            logger.error('Provided Request is invalid', {severity: "error"})
             setErrorResponse('400', response);
         } else {
             const encoded = authorization.substring(6);
@@ -70,12 +73,12 @@ export const fetchUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
           
             if (!authenticatedUser) {
-                logger.warn('User does not exist. Failed at authentication', {severity: "warn", username: authEmail, status: "success"})
+                logger.warn('User does not exist. Failed at authentication', {severity: "warn"})
                 setErrorResponse('401', response, "User does not exist.");
             } else {
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
                 if (isValid) {
-                    logger.info('User exists. Retrieving details', {severity: "info", username: authEmail, status: "success"})
+                    logger.info('User exists. Retrieving details', {severity: "info"})
                     const getUser = {
                         id : authenticatedUser.dataValues.id,
                         first_name : authenticatedUser.dataValues.first_name,
@@ -85,26 +88,28 @@ export const fetchUser = async (request, response) => {
                         account_updated : authenticatedUser.dataValues.account_updated
                     }
                     response.status(200).json(getUser).send();
-                    logger.info('User Details retrieved', {severity: "info", username: authEmail, status: "success"})
+                    logger.info('User Details retrieved', {severity: "info"})
                 } else {
-                    logger.error('Invalid Login Credentials. Check username or password.', {severity: "error", status: "error"})
+                    logger.error('Invalid Login Credentials. Check username or password.', {severity: "error"})
                     setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
         }
     } catch (error) {
-        logger.error('Service Unavailable', {severity: "error", status: "error"})
+        logger.error('Service Unavailable', {severity: "error"})
         setErrorResponse('503', response);
     }
 };
 
 export const updateUser = async (request, response) => {
     try {
+        logger.debug('updateUser is being processed', {severity: "debug"})
+
         await sequelize.authenticate();
         response.header('Cache-Control', 'no-cache');  // https://www.rfc-editor.org/rfc/rfc9111#section-5.2
         const authorization = request.headers.authorization;
         if (!authorization || (Object.keys(request.query).length > 0)) {
-            logger.error('Provided Request is invalid', {severity: "error", status: "error"})
+            logger.error('Provided Request is invalid', {severity: "error"})
             setErrorResponse('400', response);
         } else {
             const encoded = authorization.substring(6);
@@ -113,15 +118,15 @@ export const updateUser = async (request, response) => {
             const authenticatedUser = await User.findOne({ where: { username: authEmail}});
         
             if (!authenticatedUser) {
-                logger.warn('User does not exist. Failed at authentication', {severity: "warn", username: authEmail, status: "success"})
+                logger.warn('User does not exist. Failed at authentication', {severity: "warn"})
                 setErrorResponse('401', response, "User does not exist.");
             } else {
                 const isValid = await bcrypt.compare(authPassword, authenticatedUser.dataValues.password);
                 if (isValid) {
-                    logger.info('User exists. Retrieving details', {severity: "info", username: authEmail, status: "success"})
+                    logger.info('User exists. Retrieving details', {severity: "info"})
                     const resBody = request.body;
                     if (!userService.isValidReq(resBody) || !(userService.isValidPutReq(resBody))) {
-                        logger.error('Provided Request is invalid', {severity: "error", status: "error"})
+                        logger.error('Provided Request is invalid', {severity: "error"})
                         setErrorResponse('400', response);
                     } else {
                         await User.update({
@@ -134,16 +139,16 @@ export const updateUser = async (request, response) => {
                             }
                         })
                         setResponse('204', response);
-                        logger.info('User Details edited', {severity: "info", username: authEmail, status: "success"})
+                        logger.info('User Details edited', {severity: "info"})
                     }
                 } else {
-                    logger.error('Invalid Login Credentials. Check username or password.', {severity: "error", status: "error"})
+                    logger.error('Invalid Login Credentials. Check username or password.', {severity: "error"})
                     setErrorResponse('401', response, "Invalid Credentials");
                 }
             }
         }
     } catch (error) {
-        logger.error('Service Unavailable', {severity: "error", status: "error"})
+        logger.error('Service Unavailable', {severity: "error"})
         setErrorResponse('503', response);
     }
 };
