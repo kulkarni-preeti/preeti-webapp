@@ -14,7 +14,13 @@ logging:
       type: modify_fields
       fields:
         severity:
-          move_from: jsonPayload.severity
+          move_from: jsonPayload.level
+          map_values:
+            "debug": "DEBUG"
+            "info": "INFO"
+            "warn": "WARNING"
+            "error": "ERROR"
+            "fatal": "FATAL"
   service:
     pipelines:
       default_pipeline:

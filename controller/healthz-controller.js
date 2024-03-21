@@ -6,18 +6,18 @@ const logger = getLogger();
 
 export const getHealthz = async (request, response) => {
     try {
-        logger.debug('getHealthz is being processed', {severity: "debug"})
+        logger.debug('getHealthz is being processed')
 
         if (Object.keys(request.body).length !== 0) {
-            logger.error('Provided request for Healthz API is invalid', {severity: "error"})
+            logger.error('Provided request for Healthz API is invalid')
             setErrorResponse('400', response);
             return;
         } else {
             await authPostgres(response);
-            logger.info('Connecting to sequelize database', {severity: "info"})
+            logger.info('Connecting to sequelize database')
         }
     } catch {
-        logger.error('Internal Service Error. Try again after sometime', {severity: "error"})
+        logger.error('Internal Service Error. Try again after sometime')
         setErrorResponse('500', response);
     }
 };

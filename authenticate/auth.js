@@ -16,13 +16,13 @@ export const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER,
 
 export const authPostgres = async (response) => {
     try {
-        logger.debug('authPostgres is being processed', {severity: "debug"})
+        logger.debug('authPostgres is being processed')
         await sequelize.authenticate();
         response.header('Cache-Control', 'no-cache');  // https://www.rfc-editor.org/rfc/rfc9111#section-5.2
-        logger.info('Successfully connected to the database', {severity: "info"})
+        logger.info('Successfully connected to the database')
         setResponse('200', response);
     } catch (error) {
-        logger.error('Unable to connect to database', {severity: "info"})
+        logger.error('Unable to connect to database')
         setErrorResponse('503', response);
     }
 }
