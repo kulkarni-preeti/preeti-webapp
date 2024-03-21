@@ -7,9 +7,9 @@ import { getLogger } from './../logger/logging.js';
 const logger = getLogger();
 
 const isGetMethod = (request, response, next) => {
-    logger.debug('isGetMethod is being processed', {severity: "debug"})
+    logger.debug('isGetMethod is being processed')
     if ((request.method !== 'GET') || (Object.keys(request.query).length > 0)) {
-        logger.error('Invalid request. Check Payload', {severity: "error"})
+        logger.error('Invalid request. Check Payload')
         setErrorResponse('405', response);
         return;
     }
