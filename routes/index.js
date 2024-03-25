@@ -1,5 +1,6 @@
 import healthzRouter from './healthz-router.js'
 import userRouter from './self-router.js';
+import verifyEmailRouter from './email-router.js';
 import { setErrorResponse } from '../controller/response-handler.js';
 import { authPostgres } from '../authenticate/auth.js'
 import { getLogger } from './../logger/logging.js';
@@ -7,9 +8,9 @@ import { getLogger } from './../logger/logging.js';
 const logger = getLogger();
 
 const isGetMethod = (request, response, next) => {
-    logger.debug('isGetMethod is being processed')
+    logger.debug('isGetMethod is being processed');
     if ((request.method !== 'GET') || (Object.keys(request.query).length > 0)) {
-        logger.error('Invalid request. Check Payload')
+        logger.error('Invalid request. Check Payload');
         setErrorResponse('405', response);
         return;
     }
@@ -18,5 +19,6 @@ const isGetMethod = (request, response, next) => {
 
 export default (app) => {
     app.use('/healthz', isGetMethod, healthzRouter);
-    app.use('/vi/user', userRouter);
+    app.use('/v1/user/self', userRouter);
+    app.use('/verify', verifyEmailRouter);
 }

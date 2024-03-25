@@ -23,6 +23,19 @@ const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
         required: true
+    },
+    token_id: {
+        type: DataTypes.STRING,
+        required: false
+    },
+    expiration_dttm: {
+        type: DataTypes.STRING,
+        required: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        required: false,
+        defaultValue: 'Inactive'
     }
 },{
   underscored: true,
