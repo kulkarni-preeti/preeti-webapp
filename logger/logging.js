@@ -1,5 +1,12 @@
 import { createLogger, transports, format } from 'winston';
 
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 let loggerInstance = null;
 let environmentType = '';
 

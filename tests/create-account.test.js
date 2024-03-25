@@ -14,7 +14,7 @@ describe("Create an Account", () => {
       "username": "p.smith@gmail.com"
     }
     request(app)
-      .post("/vi/user")
+      .post("/v1/user/self")
       .send(userData)
       .expect(201)
       .end((err, res) => {
@@ -30,7 +30,7 @@ describe("Create an Account", () => {
     const authHeader = `Basic ${credentials}`;
 
     request(app)
-      .get("/vi/user")
+      .get("/v1/user/self")
       .set("Authorization", authHeader)
       .expect(200)
       .end((err, res) => {
@@ -54,7 +54,7 @@ describe("Update the Account", () => {
     };
 
     request(app)
-    .put("/vi/user")
+    .put("/v1/user/self")
     .set("Authorization", authHeader)
     .send(updateUser)
     .expect(204)
