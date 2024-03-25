@@ -62,7 +62,7 @@ export const createUser = async (request, response) => {
                     account_created : createdUser.dataValues.account_created,
                     account_updated : createdUser.dataValues.account_updated
                 }
-                await publishMessage({
+                await publishMessage(topicName, {
                     username: createdUser.dataValues.username,
                     firstname: createdUser.dataValues.first_name,
                     lastname : createdUser.dataValues.last_name
