@@ -13,18 +13,19 @@ const logger = getLogger();
 
 const pubSubClient = new PubSub();
 
-const publishMessage = async (message) => {
-    const topicName = 'projects/preeticloud/topics/verify_email_demo';
+const topicName = 'projects/preeticloud/topics/verify_email_demo';
+async function publishMessage(topicName, message) {
     const dataBuffer = Buffer.from(JSON.stringify(message));
-
     try {
-        const messageId = await pubSubClient.topic(topicName).publish(dataBuffer);
-        console.log(`Message ${messageId} published.`);
+      const messageId = await pubSubClient
+        .topic(topicName)
+        .publishMessage({data: dataBuffer});
+      console.log(`Message ${messageId} published.`);
     } catch (error) {
-        console.error(`Error publishing message: ${error}`);
+      console.error(`Received error while publishing: ${error.message}`);
+      process.exitCode = 1;
     }
-};
-
+  }
 
 export const createUser = async (request, response) => {
     try {
