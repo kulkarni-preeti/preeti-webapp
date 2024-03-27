@@ -10,7 +10,7 @@ export const verifyUser = async (request, response) => {
         const token = request.query.token;
         const userDetails = await User.findOne({
             where: {
-                token_id: token
+                id: token
             }
         });
         if (!userDetails) {
@@ -19,8 +19,8 @@ export const verifyUser = async (request, response) => {
             return;
         } else {
             const curr_dttm = Date.now();
-            if (token === userDetails.dataValues.token_id && (curr_dttm < parseInt(userDetails.dataValues.expiration_dttm, 10))) {
-                await User.update({ status: 'active' }, {
+            if (token === userDetails.dataValues.id && (curr_dttm < parseInt(userDetails.dataValues.expiration_dttm, 10))) {
+                await User.update({ status: 'Active' }, {
                     where: {
                         username: userDetails.dataValues.username
                     }

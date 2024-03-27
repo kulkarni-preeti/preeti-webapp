@@ -24,10 +24,6 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         required: true
     },
-    token_id: {
-        type: DataTypes.STRING,
-        required: false
-    },
     expiration_dttm: {
         type: DataTypes.STRING,
         required: false

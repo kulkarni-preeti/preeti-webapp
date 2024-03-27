@@ -26,7 +26,7 @@ function initializeLogger() {
   }
 
   return createLogger({
-    level: 'info',
+    level: 'debug',
     format: logFormat,
     transports: [logTransport]
   });

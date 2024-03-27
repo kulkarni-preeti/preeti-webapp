@@ -7,13 +7,15 @@ import * as userService from "../services/user-service.js";
 const ignorePostFields = ['account_created', 'account_updated'];
 import { getLogger } from './../logger/logging.js';
 import { PubSub } from '@google-cloud/pubsub';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const logger = getLogger();
 
 const pubSubClient = new PubSub();
 
-const topicName = 'projects/preeticloud/topics/verify_email_demo';
+const topicName = process.env.PUBSUB_TOPIC_NAME;
 async function publishMessage(topicName, message) {
     const dataBuffer = Buffer.from(JSON.stringify(message));
     try {
@@ -30,7 +32,6 @@ async function publishMessage(topicName, message) {
 export const createUser = async (request, response) => {
     try {
         logger.debug('createUser is being processed');
-
         await sequelize.authenticate();
         response.header('Cache-Control', 'no-cache');  // https://www.rfc-editor.org/rfc/rfc9111#section-5.2
         
@@ -60,7 +61,8 @@ export const createUser = async (request, response) => {
                     last_name : createdUser.dataValues.last_name,
                     username : createdUser.dataValues.username,
                     account_created : createdUser.dataValues.account_created,
-                    account_updated : createdUser.dataValues.account_updated
+                    account_updated : createdUser.dataValues.account_updated,
+                    status: createdUser.dataValues.status
                 }
                 await publishMessage(topicName, {
                     username: createdUser.dataValues.username,
@@ -108,10 +110,16 @@ export const fetchUser = async (request, response) => {
                         last_name : authenticatedUser.dataValues.last_name,
                         username : authenticatedUser.dataValues.username,
                         account_created : authenticatedUser.dataValues.account_created,
-                        account_updated : authenticatedUser.dataValues.account_updated
+                        account_updated : authenticatedUser.dataValues.account_updated,
+                        status : authenticatedUser.dataValues.status
                     }
-                    response.status(200).json(getUser).send();
-                    logger.info('User Details retrieved');
+                    if ((process.env.NODE_ENV === 'test') || (getUser.status === 'Active')) {
+                        response.status(200).json(getUser).send();
+                        logger.info('User Details retrieved');
+                    } else {
+                        setErrorResponse('403', response, "User is locked. Cannot access resource");
+                        logger.error('User is locked. Cannot access resource');
+                    }
                 } else {
                     logger.error('Invalid Login Credentials. Check username or password.');
                     setErrorResponse('401', response, "Invalid Credentials");
@@ -152,17 +160,22 @@ export const updateUser = async (request, response) => {
                         logger.error('Provided Request is invalid');
                         setErrorResponse('400', response);
                     } else {
-                        await User.update({
-                            first_name : resBody.first_name,
-                            last_name : resBody.last_name,
-                            password : await bcrypt.hash(resBody.password, 10)
-                        }, {
-                            where : {
-                                username : authEmail
-                            }
-                        })
-                        setResponse('204', response);
-                        logger.info('User Details edited');
+                        if ((process.env.NODE_ENV === 'test') || (getUser.status === 'Active')) {
+                            await User.update({
+                                first_name : resBody.first_name,
+                                last_name : resBody.last_name,
+                                password : await bcrypt.hash(resBody.password, 10)
+                            }, {
+                                where : {
+                                    username : authEmail
+                                }
+                            })
+                            setResponse('204', response);
+                            logger.info('User Details edited');
+                        } else {
+                            setErrorResponse('403', response, "User is locked. Cannot access resource");
+                            logger.error('User is locked. Cannot access resource');
+                        }
                     }
                 } else {
                     logger.error('Invalid Login Credentials. Check username or password.');
