@@ -160,7 +160,7 @@ export const updateUser = async (request, response) => {
                         logger.error('Provided Request is invalid');
                         setErrorResponse('400', response);
                     } else {
-                        if ((process.env.NODE_ENV === 'test') || (getUser.status === 'Active')) {
+                        if ((process.env.NODE_ENV === 'test') || (resBody.status === 'Active')) {
                             await User.update({
                                 first_name : resBody.first_name,
                                 last_name : resBody.last_name,
