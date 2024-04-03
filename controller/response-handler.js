@@ -51,6 +51,12 @@ export const setErrorResponse = (errorCode, response, errorMessage) => {
         });
         break;
       }
+      case '403': {
+        response.status(403).json({
+          message: errorMessage ? errorMessage : "User is locked. Cannot access resource"
+        });
+        break;
+      }
       default:{
         response.status(500).json({
           message:  errorMessage ? errorMessage : "Internal Server Error."
