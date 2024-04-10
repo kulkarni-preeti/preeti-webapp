@@ -46,8 +46,11 @@ jobs:
       run: packer validate -var-file=./packer/variables.json ./packer
 
     - name: Build Packer template
-      run: packer build -var-file=./packer/variables.json ./packer
+      run: | 
+        PACKER_OUTPUT=$(packer build -var-file=./packer/variables.json ./packer 2>&1)
+        CUSTOM_IMAGE_ID=$(echo "$PACKER_OUTPUT" | grep -Eo 'custom image ID: (.*)' | awk '{print $2}')
+        echo "Custom Image ID: $CUSTOM_IMAGE_ID"
 
     - name: Create Instance template
       run: |
-        gcloud compute instance-templates create test3 --source-instance=webapp-instance-0b1g --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/custom-image-1712176719,auto-delete=yes
+        gcloud compute instance-templates create test3 --source-instance=webapp-instance-0b1g --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/$CUSTOM_IMAGE_ID,auto-delete=yes
