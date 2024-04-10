@@ -57,3 +57,6 @@ jobs:
 
         gcloud compute instance-groups managed rolling-action start-update instance-group-igm --version=template=projects/preeticloud/regions/us-central1/instanceTemplates/instance-temp-${TIMESTAMP} --region=us-central1
         
+    - name: Wait for Instance Refresh
+      run: |
+        gcloud compute instance-groups managed wait-until instance-group-igm --version-target-reached
