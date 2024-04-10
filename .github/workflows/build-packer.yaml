@@ -51,7 +51,7 @@ jobs:
         CUSTOM_IMAGE_ID=$(echo "$PACKER_OUTPUT" | grep -oP "custom-image-\d+")
         echo "Custom Image ID: $CUSTOM_IMAGE_ID"
         TIMESTAMP=$(date +"%d%H%M%S")
-        gcloud compute instance-templates create instance-temp-${TIMESTAMP} --source-instance=webapp-instance-zgd3 --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/$CUSTOM_IMAGE_ID,auto-delete=yes
+        gcloud compute instance-templates create instance-temp-${TIMESTAMP} --source-instance=webapp-instance-${{secrets.INSTANCE_EXT}} --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/$CUSTOM_IMAGE_ID,auto-delete=yes
 
         gcloud compute instance-groups managed set-instance-template instance-group-igm --template=projects/preeticloud/regions/us-central1/instanceTemplates/instance-temp-${TIMESTAMP} --region=us-central1
 
