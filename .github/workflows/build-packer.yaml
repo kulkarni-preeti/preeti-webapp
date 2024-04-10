@@ -51,7 +51,10 @@ jobs:
         CUSTOM_IMAGE_ID=$(echo "$PACKER_OUTPUT" | grep -oP "custom-image-\d+")
         echo "Custom Image ID: $CUSTOM_IMAGE_ID"
 
+        outputs:
+          custom_image_id: $CUSTOM_IMAGE_ID
+
     - name: Create Instance template
       run: |
         TIMESTAMP=$(date +"%d%H%M%S")
-        gcloud compute instance-templates create instance-temp-${TIMESTAMP} --source-instance=webapp-instance-0b1g --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/${CUSTOM_IMAGE_ID},auto-delete=yes
+        gcloud compute instance-templates create instance-temp-${TIMESTAMP} --source-instance=webapp-instance-0b1g --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/${{inputs.custom_image_id}},auto-delete=yes
