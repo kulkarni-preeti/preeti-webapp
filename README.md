@@ -18,5 +18,3 @@ npm install
 
 # Run the application
 npm start
-
-demo5
