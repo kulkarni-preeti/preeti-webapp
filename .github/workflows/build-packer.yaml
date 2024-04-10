@@ -53,5 +53,5 @@ jobs:
 
     - name: Create Instance template
       run: |
-        TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+        TIMESTAMP=$(date +"%d%H%M%S")
         gcloud compute instance-templates create instance-temp-${TIMESTAMP} --source-instance=webapp-instance-0b1g --source-instance-zone=us-central1-b --instance-template-region=us-central1 --configure-disk=device-name=persistent-disk-0,instantiate-from=custom-image,custom-image=projects/preeticloud/global/images/$CUSTOM_IMAGE_ID,auto-delete=yes
