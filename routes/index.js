@@ -19,6 +19,6 @@ const isGetMethod = (request, response, next) => {
 
 export default (app) => {
     app.use('/healthz', isGetMethod, healthzRouter);
-    app.use('/v1/user/self', userRouter);
+    app.use('/v2/user/self', userRouter);
     app.use('/verify', verifyEmailRouter);
 }
