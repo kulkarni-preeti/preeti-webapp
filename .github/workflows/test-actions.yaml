@@ -33,9 +33,9 @@ jobs:
 
       - name: Create Postgres Database and User 
         run: |
-          sudo -u postgres psql -c "CREATE USER postgres WITH PASSWORD 'password';"
+          sudo -u postgres psql -c "CREATE USER preeti WITH PASSWORD 'password';"
           sudo -u postgres psql -c "CREATE DATABASE UserDB"
-          sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE UserDB to postgres;"
+          sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE UserDB to preeti;"
 
       - name: Install dependencies
         run: npm install
