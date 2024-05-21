@@ -48,6 +48,6 @@ jobs:
           DB_PORT: 5432
           DB_USER: preetikulk
           DB_NAME: UserDB
-          DB_PASSWORD: password
+          DB_PASSWORD: 'password'
           DB_DIALECT: postgres
 
